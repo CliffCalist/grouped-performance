@@ -10,6 +10,7 @@ Unlike Unity's built-in Profiler, GroupedPerformance focuses on logic-level perf
 - Millisecond precision using `System.Diagnostics.Stopwatch`
 - Console output for any tracked group
 - Does not rely on Unity timeline or Profiler API
+- One-off sample measurement with automatic console output
 
 # Installing
 
@@ -28,8 +29,6 @@ https://github.com/white-arrow/grouped-performance.git
 
 # Usage
 
-## Basic profiling
-
 ```csharp
 PerformanceProfiler.StartSample("InitSomething");
 
@@ -38,7 +37,7 @@ PerformanceProfiler.StartSample("InitSomething");
 PerformanceProfiler.StopSample("InitSomething");
 ```
 
-## Logging results
+---
 
 ```csharp
 PerformanceProfiler.LogSample("InitSomething");
@@ -55,6 +54,36 @@ This will output:
  → (0) StepOne                    — 11.403 ms
  → (1) StepTwo                    — 13.281 ms
  → (2) StepThree                  — 13.142 ms
+```
+
+## Conditional Compilation
+
+GroupedPerformance is conditionally compiled and requires the following scripting define symbol:
+
+```
+ENABLE_STACKED_PROFILING
+```
+
+Make sure to add this symbol to your project via:
+- **Edit > Project Settings > Player > Scripting Define Symbols**, or
+- through build configurations
+
+When the symbol is not defined, all performance profiling calls are removed at compile time via `[Conditional]` attributes.
+
+## Simple measurement
+
+For quick measurements that do not require grouping or tracking multiple samples, you can use the simple API:
+
+```csharp
+PerformanceProfiler.StartSimpleSample("Load Inventory");
+// ... your code ...
+PerformanceProfiler.StopSimpleSample("Load Inventory");
+```
+
+This will automatically log a result like:
+
+```
+[PerformanceProfiler] Load Inventory — 47.219 ms
 ```
 
 # Roadmap

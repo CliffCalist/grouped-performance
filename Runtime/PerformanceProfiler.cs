@@ -9,6 +9,38 @@ namespace WhiteArrow.GroupedPerformance
     public static class PerformanceProfiler
     {
         private static readonly Dictionary<string, SampleGroup> s_groups = new();
+        private static readonly Dictionary<string, Stopwatch> _simpleSamples = new();
+
+
+
+
+        [Conditional("ENABLE_STACKED_PROFILING")]
+        public static void StartSimpleSample(string label)
+        {
+            if (_simpleSamples.ContainsKey(label))
+            {
+                Debug.LogWarning($"[PerformanceProfiler] Simple sample '{label}' is already running.");
+                return;
+            }
+
+            var sw = Stopwatch.StartNew();
+            _simpleSamples[label] = sw;
+        }
+
+        [Conditional("ENABLE_STACKED_PROFILING")]
+        public static void StopSimpleSample(string label)
+        {
+            if (!_simpleSamples.TryGetValue(label, out var sw))
+            {
+                Debug.LogWarning($"[PerformanceProfiler] Simple sample '{label}' was not started.");
+                return;
+            }
+
+            sw.Stop();
+            _simpleSamples.Remove(label);
+
+            Debug.Log($"[PerformanceProfiler] {label} — {sw.Elapsed.TotalMilliseconds:F3} ms");
+        }
 
 
 
