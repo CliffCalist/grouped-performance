@@ -1,61 +1,66 @@
-# StackedProfiling
+# Grouped Performance
 
-Custom profiler for Unity that focuses on sequential sample analysis rather than live timeline inspection.  
-Unlike Unity's built-in Profiler, which is optimized for real-time performance spikes, StackedProfiling stores all measurement data in memory until the end of the game session — making it ideal for analyzing startup sequences, custom logic, or initialization flows.
+Lightweight performance profiling framework for Unity with grouped, labeled samples.
+
+Unlike Unity's built-in Profiler, GroupedPerformance focuses on logic-level performance analysis. It enables manual instrumentation of time measurements, organized by named groups, and outputs results directly to the console — ideal for startup sequences, initialization phases, or benchmarking game systems.
 
 # Features
 
-- Manual sample start/stop by name
-- Stores all durations in memory
+- Grouped performance measurements with labeled samples
 - Millisecond precision using `System.Diagnostics.Stopwatch`
-- Console output for any tracked sample
-- Zero GC, thread-safe API (if used carefully)
+- Console output for any tracked group
 - Does not rely on Unity timeline or Profiler API
 
 # Installing
 
-Add the following line to your `manifest.json` under `dependencies`:
+To install GroupedPerformance via Unity Package Manager:
 
-```json
-"com.white-arrow.stacked-profiling": "https://github.com/white-arrow/stacked-profiling.git"
+1. Open your Unity project.
+2. Go to `Window > Package Manager`.
+3. Click the `+` button and choose `Add package from Git URL...`.
+4. Paste the following URL:
+
 ```
+https://github.com/white-arrow/grouped-performance.git
+```
+
+5. Click `Add`.
 
 # Usage
 
 ## Basic profiling
 
 ```csharp
-StackedProfiler.StartSample("InitSomething");
+PerformanceProfiler.StartSample("InitSomething");
 
 // your code
 
-StackedProfiler.StopSample("InitSomething");
+PerformanceProfiler.StopSample("InitSomething");
 ```
 
 ## Logging results
 
 ```csharp
-StackedProfiler.LogSample("InitSomething");
+PerformanceProfiler.LogSample("InitSomething");
 ```
 
 This will output:
 
 ```
-[StackedProfiler] InitSomething summary (Total: 37.826 ms)
- → (0) 11.403 ms
- → (1) 13.281 ms
- → (2) 13.142 ms
+[PerformanceProfiler] InitSomething
+ ├ total:      37.826 ms
+ ├ avg:        12.609 ms
+ ├ min:        11.403 ms
+ └ max:        13.281 ms
+ → (0) StepOne                    — 11.403 ms
+ → (1) StepTwo                    — 13.281 ms
+ → (2) StepThree                  — 13.142 ms
 ```
-
-You can call `StartSample` / `StopSample` multiple times with the same name — the profiler will track each measurement independently.
 
 # Roadmap
 
-- [x] Manual sample tracking with string keys
 - [x] Console logging with detailed breakdown
-- [ ] Support for `IDisposable` usage (`using StackedProfiler.Sample(...)`)
-- [ ] Grouped samples (e.g., per frame, per system)
-- [ ] Sample nesting (parent/child hierarchy)
+- [ ] Optional support for `using` syntax (`using PerformanceProfiler.Scoped(...)`)
 - [ ] Export to JSON or CSV
 - [ ] Editor window for browsing stored data
 - [ ] Integration with Unity log files

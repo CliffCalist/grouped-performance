@@ -1,7 +1,7 @@
 {
-    "name": "com.white-arrow.stacked-profiling",
+    "name": "com.white-arrow.grouped-performance",
     "version": "1.0.0",
-    "displayName": "Stacked Profiling",
+    "displayName": "Grouped Performance",
     "description": "An alternative Unity profiling tool focused on cumulative sample tracking, not transient timelines.",
     "licensesUrl": "https://github.com/CliffCalist/stacked-profiling/blob/62df5a00687b88332b2ed3ecfc6740d5e89a055d/LICENSE",
     "author": {

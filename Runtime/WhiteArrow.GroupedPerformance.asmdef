@@ -1,6 +1,6 @@
 {
-    "name": "WhiteArrow.StackedProfiling",
-    "rootNamespace": "WhiteArrow.StackedProfiling",
+    "name": "WhiteArrow.GroupedPerformance",
+    "rootNamespace": "WhiteArrow.GroupedPerformance",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
