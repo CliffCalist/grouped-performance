@@ -22,7 +22,7 @@ To install GroupedPerformance via Unity Package Manager:
 4. Paste the following URL:
 
 ```
-https://github.com/white-arrow/grouped-performance.git
+https://github.com/CliffCalist/grouped-performance.git
 ```
 
 5. Click `Add`.
