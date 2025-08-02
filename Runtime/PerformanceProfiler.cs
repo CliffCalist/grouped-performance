@@ -13,8 +13,11 @@ namespace WhiteArrow.GroupedPerformance
 
 
 
+        public const string COMPILATION_SYMBOL = "WA_ENABLE_PERFORMANCE_PROFILING";
 
-        [Conditional("ENABLE_STACKED_PROFILING")]
+
+
+        [Conditional(COMPILATION_SYMBOL)]
         public static void StartSimpleSample(string label)
         {
             if (_simpleSamples.ContainsKey(label))
@@ -27,7 +30,7 @@ namespace WhiteArrow.GroupedPerformance
             _simpleSamples[label] = sw;
         }
 
-        [Conditional("ENABLE_STACKED_PROFILING")]
+        [Conditional(COMPILATION_SYMBOL)]
         public static void StopSimpleSample(string label)
         {
             if (!_simpleSamples.TryGetValue(label, out var sw))
@@ -44,7 +47,7 @@ namespace WhiteArrow.GroupedPerformance
 
 
 
-        [Conditional("ENABLE_PROFILING")]
+        [Conditional(COMPILATION_SYMBOL)]
         public static void StartSample(string groupName, string label)
         {
             if (!s_groups.TryGetValue(groupName, out var group))
@@ -62,7 +65,7 @@ namespace WhiteArrow.GroupedPerformance
             group.Samples.Add(sample);
         }
 
-        [Conditional("ENABLE_PROFILING")]
+        [Conditional(COMPILATION_SYMBOL)]
         public static void StopSample(string groupName, string label)
         {
             if (!s_groups.TryGetValue(groupName, out var group))
@@ -78,7 +81,7 @@ namespace WhiteArrow.GroupedPerformance
 
 
 
-        [Conditional("ENABLE_PROFILING")]
+        [Conditional(COMPILATION_SYMBOL)]
         public static void LogGroup(string groupName)
         {
             if (!s_groups.TryGetValue(groupName, out var group) || group.Samples.Count == 0)

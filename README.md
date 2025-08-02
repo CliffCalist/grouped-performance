@@ -58,17 +58,28 @@ This will output:
 
 ## Conditional Compilation
 
-GroupedPerformance is conditionally compiled and requires the following scripting define symbol:
+GroupedPerformance uses `ConditionalAttribute` with a compilation symbol to remove all profiling code at compile time when profiling is disabled.
+
+The symbol used is:
 
 ```
-ENABLE_STACKED_PROFILING
+WA_ENABLE_PERFORMANCE_PROFILING
 ```
 
-Make sure to add this symbol to your project via:
-- **Edit > Project Settings > Player > Scripting Define Symbols**, or
-- through build configurations
+Because this is handled via `[Conditional(...)]`, you can freely call profiling methods throughout your codebase — the compiler will automatically strip these calls from the build if the symbol is not defined.
 
-When the symbol is not defined, all performance profiling calls are removed at compile time via `[Conditional]` attributes.
+To enable profiling:
+- Go to **Edit > Project Settings > Player > Scripting Define Symbols**
+- Add `WA_ENABLE_PERFORMANCE_PROFILING` to your current build target
+- Or define it through build scripts, CI, or scripting APIs
+
+For advanced use, you can reference the constant containing the symbol name:
+
+```csharp
+PerformanceProfiler.CompilationSymbol
+```
+
+This allows you to create your own conditional utilities or wrappers that align with GroupedPerformance’s compilation behavior.
 
 ## Simple measurement
 
