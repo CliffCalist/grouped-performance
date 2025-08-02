@@ -10,6 +10,20 @@ Unlike Unity's built-in Profiler, GroupedPerformance focuses on logic-level perf
 - Convenient logging of entire groups or individual samples
 - Does not rely on Unity timeline or Profiler API
 
+# Installing
+
+To install GroupedPerformance via Unity Package Manager:
+
+1. Open your Unity project.
+2. Go to `Window > Package Manager`.
+3. Click the `+` button and choose `Add package from Git URL...`.
+4. Paste the following URL:
+
+```
+https://github.com/CliffCalist/grouped-performance.git
+```
+5. Click `Add`.
+
 # Usage
 
 ## Grouped profiling
