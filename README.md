@@ -68,10 +68,21 @@ WA_ENABLE_PERFORMANCE_PROFILING
 
 Because this is handled via `[Conditional(...)]`, you can freely call profiling methods throughout your codebase — the compiler will automatically strip these calls from the build if the symbol is not defined.
 
-To enable profiling:
-- Go to **Edit > Project Settings > Player > Scripting Define Symbols**
-- Add `WA_ENABLE_PERFORMANCE_PROFILING` to your current build target
-- Or define it through build scripts, CI, or scripting APIs
+To enable profiling, you have two options:
+
+1. **Via Editor Menu** (recommended):  
+   Navigate to:
+
+   ```
+   Tools > White Arrow > Performance Profiling > Enable / Disable
+   ```
+
+   This will automatically toggle the `WA_ENABLE_PERFORMANCE_PROFILING` symbol for the current build target group.
+
+2. **Manually**:
+   - Go to **Edit > Project Settings > Player > Scripting Define Symbols**
+   - Add or remove `WA_ENABLE_PERFORMANCE_PROFILING` from the active build target group
+   - Or define it through build scripts, CI, or scripting APIs
 
 For advanced use, you can reference the constant containing the symbol name:
 

@@ -1,0 +1,18 @@
+{
+    "name": "WhiteArrowEditor.GroupedPerformance",
+    "rootNamespace": "WhiteArrowEditor.GroupedPerformance",
+    "references": [
+        "GUID:2d89679e3f95447c08566e7930b20da7"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
