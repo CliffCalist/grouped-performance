@@ -6,54 +6,58 @@ Unlike Unity's built-in Profiler, GroupedPerformance focuses on logic-level perf
 
 # Features
 
-- Grouped performance measurements with labeled samples
-- Millisecond precision using `System.Diagnostics.Stopwatch`
-- Console output for any tracked group
+- Grouped performance samples for structured profiling
+- Convenient logging of entire groups or individual samples
 - Does not rely on Unity timeline or Profiler API
-- One-off sample measurement with automatic console output
-
-# Installing
-
-To install GroupedPerformance via Unity Package Manager:
-
-1. Open your Unity project.
-2. Go to `Window > Package Manager`.
-3. Click the `+` button and choose `Add package from Git URL...`.
-4. Paste the following URL:
-
-```
-https://github.com/CliffCalist/grouped-performance.git
-```
-
-5. Click `Add`.
 
 # Usage
 
-```csharp
-PerformanceProfiler.StartSample("InitSomething");
+## Grouped profiling
 
-// your code
-
-PerformanceProfiler.StopSample("InitSomething");
-```
-
----
+To profile grouped samples, use `StartSample(group, label)` and `StopSample(group, label)`:
 
 ```csharp
-PerformanceProfiler.LogSample("InitSomething");
+PerformanceProfiler.StartSample("GameBoot", "InitializeSaveSystem");
+// ... initialization logic ...
+PerformanceProfiler.StopSample("GameBoot", "InitializeSaveSystem");
+
+PerformanceProfiler.StartSample("GameBoot", "InitializeAudio");
+// ...
+PerformanceProfiler.StopSample("GameBoot", "InitializeAudio");
+
+// Log the full group
+PerformanceProfiler.LogGroup("GameBoot");
 ```
 
-This will output:
+Example output:
 
 ```
-[PerformanceProfiler] InitSomething
- ├ total:      37.826 ms
- ├ avg:        12.609 ms
- ├ min:        11.403 ms
- └ max:        13.281 ms
- → (0) StepOne                    — 11.403 ms
- → (1) StepTwo                    — 13.281 ms
- → (2) StepThree                  — 13.142 ms
+[PerformanceProfiler] GameBoot
+ ├ total:      121.500 ms
+ ├ avg:         60.750 ms
+ ├ min:         58.100 ms
+ └ max:         63.400 ms
+ → (0) InitializeSaveSystem         —  58.100 ms
+ → (1) InitializeAudio              —  63.400 ms
+```
+
+## Simple measurement
+
+For quick one-off measurements that do not require grouping:
+
+```csharp
+PerformanceProfiler.StartSimpleSample("Load Inventory");
+// ... your code ...
+PerformanceProfiler.StopSimpleSample("Load Inventory");
+
+// Or log it while it's still running
+PerformanceProfiler.LogSimpleSample("Load Inventory");
+```
+
+Example output:
+
+```
+[PerformanceProfiler] Load Inventory — 47.219 ms
 ```
 
 ## Conditional Compilation
@@ -91,22 +95,6 @@ PerformanceProfiler.CompilationSymbol
 ```
 
 This allows you to create your own conditional utilities or wrappers that align with GroupedPerformance’s compilation behavior.
-
-## Simple measurement
-
-For quick measurements that do not require grouping or tracking multiple samples, you can use the simple API:
-
-```csharp
-PerformanceProfiler.StartSimpleSample("Load Inventory");
-// ... your code ...
-PerformanceProfiler.StopSimpleSample("Load Inventory");
-```
-
-This will automatically log a result like:
-
-```
-[PerformanceProfiler] Load Inventory — 47.219 ms
-```
 
 # Roadmap
 
