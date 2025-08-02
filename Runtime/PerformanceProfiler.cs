@@ -45,6 +45,19 @@ namespace WhiteArrow.GroupedPerformance
             Debug.Log($"[PerformanceProfiler] {label} — {sw.Elapsed.TotalMilliseconds:F3} ms");
         }
 
+        [Conditional(COMPILATION_SYMBOL)]
+        public static void LogSimpleSample(string label)
+        {
+            if (!_simpleSamples.TryGetValue(label, out var sw))
+            {
+                Debug.LogWarning($"[PerformanceProfiler] No simple sample found with label '{label}'.");
+                return;
+            }
+
+            var elapsed = sw.Elapsed.TotalMilliseconds;
+            Debug.Log($"[PerformanceProfiler] {label} — {elapsed:F3} ms");
+        }
+
 
 
         [Conditional(COMPILATION_SYMBOL)]
